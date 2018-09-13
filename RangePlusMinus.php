@@ -4,6 +4,8 @@
 *
 * Usage example:
 *
+* use lubosdz\RangePlusMinus;
+*
 * <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
 * 	'unit' => 'm2',
 * 	'min' => 10,

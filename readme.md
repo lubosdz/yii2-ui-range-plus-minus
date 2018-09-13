@@ -10,7 +10,7 @@ Installation
 ============
 
 ```bash
-$ composer require "lubosdz/yii2-ui-rangePlusMinus" : "~1.0.0"
+$ composer require "lubosdz/yii2-ui-range-plus-minus" : "~1.0.0"
 ```
 
 Usage
@@ -18,19 +18,7 @@ Usage
 
 ```php
 
-<?= RangePlusMinus::widget([
-	'model' => $model,
-	'attribute' => 'frequency',
-	'unit' => 'MHz',
-	'min' => 10,
-	'max' => 100,
-	'decimals' => 3,
-	'step' => 0.05,
-	'cssMinusButton' => 'btn btn-default',
-	'cssMinusIcon' => 'glyphicon glyphicon-chevron-down',
-	'cssPlusButton' => 'btn btn-default',
-	'cssPlusIcon' => 'glyphicon glyphicon-chevron-up',
-]) ?>
+use lubosdz\RangePlusMinus;
 
 <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
 	'unit' => 'm2',
@@ -44,6 +32,20 @@ Usage
 	'options' => [
 		'onchange' => new JsExpression('console.log(this)'),
 	],
+]) ?>
+
+<?= RangePlusMinus::widget([
+	'model' => $model,
+	'attribute' => 'frequency',
+	'unit' => 'MHz',
+	'min' => 10,
+	'max' => 100,
+	'decimals' => 3,
+	'step' => 0.05,
+	'cssMinusButton' => 'btn btn-default',
+	'cssMinusIcon' => 'glyphicon glyphicon-chevron-down',
+	'cssPlusButton' => 'btn btn-default',
+	'cssPlusIcon' => 'glyphicon glyphicon-chevron-up',
 ]) ?>
 
 ```
@@ -76,5 +78,3 @@ License
 =======
 
 This extension is open source and licensed under BSD-3-Clause (same as Yii2 framework).
-
---------------------------------------------------
