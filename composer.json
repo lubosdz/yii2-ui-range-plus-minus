@@ -1,0 +1,21 @@
+{
+	"name": "lubosdz/yii2-ui-rangePlusMinus",
+	"description": "UI input widget for Yii2 framework",
+	"license": "BSD-3-Clause",
+	"keywords": ["yii2", "input", "widget", "bootstrap"],
+	"type": "yii2-extension",
+	"support": {
+		"source": "https://github.com/lubosdz/yii2-ui-rangePlusMinus",
+		"issues": "https://github.com/lubosdz/yii2-ui-rangePlusMinus/issues"
+	},
+	"authors": [{
+		"name": "lubosdz"
+	}],
+	"require": {
+		"php": ">=7.0",
+		"yiisoft/yii2-jui": "~2.0.0"
+	},
+	"autoload": {
+		"psr-4": {"lubosdz\\rangePlusMinus\\": ""}
+	}
+}
