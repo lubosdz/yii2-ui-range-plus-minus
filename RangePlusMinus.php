@@ -4,7 +4,7 @@
 *
 * Usage example:
 *
-* use lubosdz\RangePlusMinus;
+* use lubosdz\ui\RangePlusMinus;
 *
 * <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
 * 	'unit' => 'm2',
@@ -35,7 +35,7 @@
 * ]) ?>
 */
 
-namespace lubosdz;
+namespace lubosdz\ui;
 
 use Yii;
 use yii\jui\InputWidget;

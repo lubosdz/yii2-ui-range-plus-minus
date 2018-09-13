@@ -1,5 +1,5 @@
-User input widget for numeric range with plus - minus handles for Yii2
-======================================================================
+Yii2 Input widget for numbers with plus - minus handles
+=======================================================
 
 Widget for framework Yii2 which enables to take user numeric input (integer, decimals) and increase/decrease the value by configured step, optionally within the min - max range.
 
@@ -18,7 +18,7 @@ Usage
 
 ```php
 
-use lubosdz\RangePlusMinus;
+use lubosdz\ui\RangePlusMinus;
 
 <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
 	'unit' => 'm2',
