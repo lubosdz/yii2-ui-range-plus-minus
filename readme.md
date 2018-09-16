@@ -3,7 +3,7 @@ Yii2 Input widget for numbers with plus - minus handles
 
 Widget for framework Yii2 which enables to take user numeric input (integer, decimals) and increase/decrease the value by configured step, optionally within the min - max range.
 
-![Screenshot](screen-yii2-rangePlusMinus.gif)
+![Screenshot](http://static.synet.sk/screen-yii2-rangePlusMinus.gif)
 
 
 Installation
