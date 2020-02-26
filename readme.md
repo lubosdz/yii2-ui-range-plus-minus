@@ -4,14 +4,14 @@ Yii2 Input widget for numbers with plus - minus handles
 Widget for framework Yii2 which enables to collect numeric values within specified min - max range.
 Supports increasing - decreasing the value by configured step and basic theming for bootstrap 3 or 4.
 
-![Screenshot](http://static.synet.sk/screen-yii2-rangePlusMinus.gif)
+![Screenshot](https://static.synet.sk/screen-yii2-rangePlusMinus.gif)
 
 
 Installation
 ============
 
 ```bash
-$ composer require "lubosdz/yii2-ui-range-plus-minus" : "~1.0.0"
+$ composer require "lubosdz/yii2-ui-range-plus-minus" : "~1.1.0"
 ```
 
 Usage
