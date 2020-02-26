@@ -83,15 +83,15 @@ License
 This extension is open source and licensed under BSD-3-Clause (same as Yii2 framework).
 
 
-Switching from BS3 to BS 4
-==========================
+Switching from BS3 to BS 4 - since 1.1.0
+========================================
 
-If you are using this widget for BS3, after upgrade to 1.0.3 please set proper bootstrap version attribute `bsVersion = 3` - see example above.
+If you are using this widget for BS3, after upgrading to 1.1.0+ please set proper bootstrap version attribute `bsVersion = 3` - see example above.
 
 
 Changelog
 =======
 
-* 1.0.3 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
+* 1.1.0 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
 * 1.0.2 - [13.09.2018] Fixed namespace
 * 1.0.0 - [13.09.2018] Initial release
