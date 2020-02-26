@@ -1,37 +1,45 @@
 <?php
 /**
-* User numeric (integer, decimal) input by clicking on plus / minus icons increasing/decreasing the value by step optionally within specified min - max range.
+* Input widget for Yii 2 framework for Bootstrap 3 and 4.
+* https://github.com/lubosdz/yii2-ui-range-plus-minus
+* (c) lubosdz@gmail.com, 2018 - 2020
+* Distributed under free BSD-3-Clause (same as Yii2 framework)
+*
+* Widget collects numeric values within specified min - max values.
+* Supports increasing - decreasing the value by configured step and basic theming for bootstrap 3 or 4.
 *
 * Usage example:
+* --------------
 *
 * use lubosdz\ui\RangePlusMinus;
 *
 * <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
+* 	'bsVersion' => 3, // supported is bootstrap 3 or 4 (default)
 * 	'unit' => 'm2',
 * 	'min' => 10,
 * 	'max' => 100,
 * 	'tooHigh' => Yii::t('app', 'Maximum value is {max}.'),
 * 	'tooLow' => Yii::t('app', 'Minimum value is {min}.'),
 * 	'step' => 5,
-* 	//'cssMinusIcon' => 'fa fa-minus',
-* 	//'cssPlusIcon' => 'fa fa-plus',
+* 	//'cssMinusIcon' => 'glyphicon glyphicon-minus',
+* 	//'cssPlusIcon' => 'glyphicon glyphicon-plus',
 * 	'options' => [
 * 		'onchange' => new JsExpression('console.log(this)'),
 * 	],
 * ]) ?>
 *
 * <?= RangePlusMinus::widget([
+*	'model' => $model,
+*	'attribute' => 'frequency',
 *	'unit' => 'MHz',
 *	'min' => 10,
 *	'max' => 100,
 *	'decimals' => 3,
 *	'step' => 0.05,
-*	'model' => $model,
-*	'cssMinusButton' => 'btn btn-default',
-*	'cssMinusIcon' => 'glyphicon glyphicon-chevron-down',
-*	'cssPlusButton' => 'btn btn-default',
-*	'cssPlusIcon' => 'glyphicon glyphicon-chevron-up',
-*	'attribute' => 'frequency',
+*	'cssMinusButton' => 'bg-success text-white',
+*	'cssMinusIcon' => 'fa fa-chevron-down',
+*	'cssPlusButton' => 'bg-info text-white',
+*	'cssPlusIcon' => 'fa fa-chevron-up',
 * ]) ?>
 */
 
@@ -44,11 +52,17 @@ use yii\web\JsExpression;
 
 class RangePlusMinus extends InputWidget
 {
+	const BS_3 = 3;
+	const BS_4 = 4;
+
+	// supported bootstrap (BS) version 3 or 4 (default)
+	public $bsVersion = self::BS_4;
+
 	/** @var string Appended value unit, e.g. Kg */
 	public $unit;
 
 	/** @var string Element cols width */
-	public $cssWrapper = 'col-md-6';
+	public $cssWrapper = 'col-md-12';
 
 	/** Formatting thousands + separator */
 	public $thousandSep = '';
@@ -72,14 +86,15 @@ class RangePlusMinus extends InputWidget
 	/** @var int 10, 100, 1000, ... roundup tens, hundreds, thousands, .. */
 	public $roundPrecision = 0;
 
-	/** @var string Any custom css */
+	/** @var string Any custom CSS */
 	public $css = '';
 
-	/** @var string CSS classes for plus/minus handles */
-	public $cssMinusIcon = 'glyphicon glyphicon-minus';
-	public $cssMinusButton = 'btn btn-success';
-	public $cssPlusIcon = 'glyphicon glyphicon-plus';
-	public $cssPlusButton = 'btn btn-danger';
+	/** @var string CSS classes for plus/minus handles - predefined for BS4, please set your own for BS3 */
+	public $cssMinusIcon = 'fa fa-minus';
+	public $cssMinusButton = 'bg-light';
+	public $cssPlusIcon = 'fa fa-plus';
+	public $cssPlusButton = 'bg-light';
+	public $cssUnitBg = 'bg-light';
 
 	/**
 	* @var array the HTML attributes for the container tag.
@@ -120,7 +135,7 @@ class RangePlusMinus extends InputWidget
 		$this->options['roundPrecision'] = intval($this->roundPrecision);
 
 		// set default value
-		if($this->defaultValue){
+		if(trim($this->defaultValue) !== ''){
 			if('' === trim($this->value)){
 				$this->value = number_format(floatval($this->defaultValue), $this->decimals, $this->decimalsSep, $this->thousandSep);
 			}
@@ -143,8 +158,7 @@ class RangePlusMinus extends InputWidget
 		if ($this->hasModel()) {
 			$this->inputId = Html::getInputId($this->model, $this->attribute);
 		}else{
-			$this->inputId = Html::getInputId($this->name, $this->attribute);
-
+			$this->inputId = $this->name ? $this->name : $this->attribute;
 		}
 
 		$this->key = substr(md5($this->inputId), -6);
@@ -174,11 +188,19 @@ class RangePlusMinus extends InputWidget
 		echo Html::beginTag('div', ['class' => 'input-group']);
 
 		// minus
-		echo Html::beginTag('span', ['class' => 'input-group-btn', 'action' => 'minus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
-		echo Html::beginTag('button', ['class' => $this->cssMinusButton, 'type' => 'button']);
-		echo Html::tag('span', '', ['class' => $this->cssMinusIcon]);
-		echo Html::endTag('button');
-		echo Html::endTag('span');
+		if($this->bsVersion == self::BS_3){
+			// BS3
+			echo Html::beginTag('span', ['class' => 'input-group-btn', 'action' => 'minus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
+			echo Html::beginTag('button', ['class' => $this->cssMinusButton, 'type' => 'button']);
+			echo Html::tag('span', '', ['class' => $this->cssMinusIcon]);
+			echo Html::endTag('button');
+			echo Html::endTag('span');
+		}else{
+			// BS4 - default
+			echo Html::beginTag('div', ['class' => 'input-group-prepend', 'action' => 'minus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
+			echo Html::tag('span', '<i class="'.$this->cssMinusIcon.'"></i>', ['class' => 'input-group-text '.$this->cssMinusButton]);
+			echo Html::endTag('div');
+		}
 
 		// input
 		if ($this->hasModel()) {
@@ -187,17 +209,36 @@ class RangePlusMinus extends InputWidget
 			echo Html::textInput($this->name, $this->value, $this->options);
 		}
 
-		if($this->unit){
-			// insert unit as addon field
-			echo Html::tag('span', $this->unit, ['class' => 'input-group-addon inside']);
+		if($this->bsVersion == self::BS_3){
+			// BS3
+			if($this->unit){
+				// insert unit as addon field
+				echo Html::tag('span', $this->unit, ['class' => 'input-group-addon inside '.$this->cssUnitBg]);
+			}
 		}
 
 		// plus
-		echo Html::beginTag('span', ['class' => 'input-group-btn', 'action' => 'plus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
-		echo Html::beginTag('button', ['class' => $this->cssPlusButton, 'type' => 'button']);
-		echo Html::tag('span', '', ['class' => $this->cssPlusIcon]);
-		echo Html::endTag('button');
-		echo Html::endTag('span');
+		if($this->bsVersion == self::BS_3){
+			// BS3
+			echo Html::beginTag('span', ['class' => 'input-group-btn', 'action' => 'plus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
+			echo Html::beginTag('button', ['class' => $this->cssPlusButton, 'type' => 'button']);
+			echo Html::tag('span', '', ['class' => $this->cssPlusIcon]);
+			echo Html::endTag('button');
+			echo Html::endTag('span');
+		}else{
+			// BS4
+			echo Html::beginTag('div', ['class' => 'input-group-append', 'action' => 'plus', 'target' => $this->inputId, 'onclick' => "rangePlusMinusClick_{$this->key}(this)"]);
+		}
+
+		if($this->bsVersion != self::BS_3){
+			if($this->unit){
+				// BS4 - insert unit as addon field
+				echo Html::tag('span', $this->unit, ['class' => 'input-group-text '.$this->cssUnitBg]);
+			}
+		}
+
+		echo Html::tag('span', '<i class="'.$this->cssPlusIcon.'"></i>', ['class' => 'input-group-text '.$this->cssPlusButton]);
+		echo Html::endTag('div');
 
 		echo Html::endTag('div'); // input-group
 		echo Html::endTag('div'); // col-md-6
@@ -226,8 +267,10 @@ function rangePlusMinusClick_{$this->key}(caller){
 		val=origVal.replace(/[^\d\.]/g,''),
 		action=$.trim(me.attr('action')).toLowerCase(),
 		step=parseFloat(i.attr('step')),
-		min=parseFloat(i.attr('min')),
-		max=parseFloat(i.attr('max')),
+		hasMin=$.trim(i.attr('min'))!=='',
+		hasMax=$.trim(i.attr('max'))!=='',
+		min=hasMin ? parseFloat(i.attr('min')) : null,
+		max=hasMax ? parseFloat(i.attr('max')) : null,
 		defaultVal=parseFloat(i.attr('defaultValue') ? i.attr('defaultValue') : min),
 		dec=parseInt(i.attr('decimals'),10);
 
@@ -251,10 +294,10 @@ function rangePlusMinusClick_{$this->key}(caller){
 	}
 
 	val = roundUp(val, ".intval($this->roundPrecision).");
-	if(max && val > max){
+	if(hasMax && val > max){
 		val=max;
 		i.closest('form').yiiActiveForm('updateAttribute', i.attr('id'), ['{$this->tooHigh}'.replace('{max}', numberFormat(max)+'".($this->unit ? ' '.$this->unit : '')."')]);
-	}else if(min && val < min){
+	}else if(hasMin && val < min){
 		val=min;
 		i.closest('form').yiiActiveForm('updateAttribute', i.attr('id'), ['{$this->tooLow}'.replace('{min}', numberFormat(min)+'".($this->unit ? ' '.$this->unit : '')."')]);
 	}else{
@@ -273,15 +316,14 @@ function rangePlusMinusClick_{$this->key}(caller){
 ";
 		/** \yii\web\View */
 		$view = $this->getView();
-
-		// register JS handlers
 		$view->registerJs($js, $view::POS_HEAD);
 
-		$view->registerCss("
-.input-group-addon.inside{
-	border-left: 0;
-}
-");
+		// register JS handlers
+		if($this->bsVersion == self::BS_3){
+			// fix BS3 border
+			$view->registerCss(".input-group-addon.inside{border-left: 0;}");
+		}
+
 		// any custom CSS
 		if($this->css){
 			$view->registerCss($this->css);

@@ -1,7 +1,8 @@
 Yii2 Input widget for numbers with plus - minus handles
 =======================================================
 
-Widget for framework Yii2 which enables to take user numeric input (integer, decimals) and increase/decrease the value by configured step, optionally within the min - max range.
+Widget for framework Yii2 which enables to collect numeric values within specified min - max range.
+Supports increasing - decreasing the value by configured step and basic theming for bootstrap 3 or 4.
 
 ![Screenshot](http://static.synet.sk/screen-yii2-rangePlusMinus.gif)
 
@@ -21,14 +22,15 @@ Usage
 use lubosdz\ui\RangePlusMinus;
 
 <?= $form->field($model, 'area_m2')->widget(RangePlusMinus::className(), [
+	'bsVersion' => 3, // <-- enforce bootstrap 3 layout, since 1.0.3 is default BS4
 	'unit' => 'm2',
 	'min' => 10,
 	'max' => 100,
 	'tooHigh' => Yii::t('app', 'Maximum value is {max}.'),
 	'tooLow' => Yii::t('app', 'Minimum value is {min}.'),
 	'step' => 5,
-	'cssClassMinus' => 'fa fa-minus',
-	'cssClassPlus' => 'fa fa-plus',
+	'cssClassMinus' => 'glyphicon glyphicon-minus',
+	'cssClassPlus' => 'glyphicon glyphicon-plus',
 	'options' => [
 		'onchange' => new JsExpression('console.log(this)'),
 	],
@@ -42,10 +44,10 @@ use lubosdz\ui\RangePlusMinus;
 	'max' => 100,
 	'decimals' => 3,
 	'step' => 0.05,
-	'cssMinusButton' => 'btn btn-default',
-	'cssMinusIcon' => 'glyphicon glyphicon-chevron-down',
-	'cssPlusButton' => 'btn btn-default',
-	'cssPlusIcon' => 'glyphicon glyphicon-chevron-up',
+	'cssMinusButton' => 'bg-success text-white',
+	'cssMinusIcon' => 'fa fa-chevron-down',
+	'cssPlusButton' => 'bg-info text-white',
+	'cssPlusIcon' => 'fa fa-chevron-up',
 ]) ?>
 
 ```
@@ -56,7 +58,7 @@ Widget options
 Option         |Description
 ---------------|---------------
 unit           | Measure unit, e.g. kg, MHz
-cssWrapper     | CSS class to set field width within a row, defaults to `col-md-6`
+cssWrapper     | CSS class to set field width within a row, defaults to `col-md-12`
 thousandSep    | Thousands separator, defaults to empty string
 decimalsSep    | Decimals separator, defaults to comma `.`
 min            | Minimum allowed value
@@ -68,13 +70,28 @@ tooLow         | Error message to show when the new value is lower than min valu
 decimals       | How many decimals should be value formatted to, default `0`
 roundPrecision | How should be value rounded, e.g. 100 will round to hundreds, 1000 will round the value to thousands etc, default `0`
 css            | Any custom CSS string
-cssMinusIcon   | CSS class for the minus icon, defaults to `glyphicon glyphicon-minus`
-cssMinusButton | CSS class for the minus button, sets the background color, defaults to `btn btn-success` (green button)
-cssPlusIcon    | CSS class for the plus icon, defaults to `glyphicon glyphicon-plus`
-cssPlusButton  | CSS class for the plus button, sets the background color, defaults to `btn btn-danger` (red button)
+cssMinusIcon   | CSS class for the minus icon, defaults to `fa fa-minus`
+cssMinusButton | CSS class for the minus button, defaults to `bg-light` (gray background in BS4)
+cssPlusIcon    | CSS class for the plus icon, defaults to `fa fa-plus`
+cssPlusButton  | CSS class for the plus button, defaults to `bg-light`
+cssUnitBg      | CSS class for the unit background color, defaults to `bg-light`
 
 
 License
 =======
 
 This extension is open source and licensed under BSD-3-Clause (same as Yii2 framework).
+
+
+Switching from BS3 to BS 4
+==========================
+
+If you are using this widget for BS3, after upgrade to 1.0.3 please set proper bootstrap version attribute `bsVersion = 3` - see example above.
+
+
+Changelog
+=======
+
+1.0.3 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
+1.0.2 - [13.09.2018] Fixed namespace
+1.0.0 - [13.09.2018] Initial release
