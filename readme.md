@@ -92,6 +92,6 @@ If you are using this widget for BS3, after upgrade to 1.0.3 please set proper b
 Changelog
 =======
 
-1.0.3 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
-1.0.2 - [13.09.2018] Fixed namespace
-1.0.0 - [13.09.2018] Initial release
+* 1.0.3 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
+* 1.0.2 - [13.09.2018] Fixed namespace
+* 1.0.0 - [13.09.2018] Initial release
