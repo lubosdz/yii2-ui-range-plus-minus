@@ -92,6 +92,7 @@ If you are using this widget for BS3, after upgrading to 1.1.0+ please set prope
 Changelog
 =======
 
+* 1.1.1 - [18.07.2023] Minor fixes to PHP 8.2+
 * 1.1.0 - [26.02.2020] Added default support for BS4, fixed validation for 0, minor theming enhancements
 * 1.0.2 - [13.09.2018] Fixed namespace
 * 1.0.0 - [13.09.2018] Initial release

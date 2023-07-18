@@ -2,7 +2,7 @@
 /**
 * Input widget for Yii 2 framework for Bootstrap 3 and 4.
 * https://github.com/lubosdz/yii2-ui-range-plus-minus
-* (c) lubosdz@gmail.com, 2018 - 2020
+* (c) lubosdz@gmail.com, 2018 - 2023
 * Distributed under free BSD-3-Clause (same as Yii2 framework)
 *
 * Widget collects numeric values within specified min - max values.
@@ -131,12 +131,12 @@ class RangePlusMinus extends InputWidget
 		$this->options['step'] = floatval($this->step);
 		$this->options['decimals'] = intval($this->decimals);
 		$this->options['thousandSep'] = $this->thousandSep;
-		$this->options['defaultValue'] = trim($this->defaultValue); // allow also empty string
+		$this->options['defaultValue'] = trim( (string) $this->defaultValue); // allow also empty string
 		$this->options['roundPrecision'] = intval($this->roundPrecision);
 
 		// set default value
-		if(trim($this->defaultValue) !== ''){
-			if('' === trim($this->value)){
+		if(trim( (string) $this->defaultValue) !== ''){
+			if('' === trim( (string) $this->value)){
 				$this->value = number_format(floatval($this->defaultValue), $this->decimals, $this->decimalsSep, $this->thousandSep);
 			}
 			if ($this->hasModel()) {
